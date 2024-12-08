@@ -46,6 +46,15 @@ export function Header() {
             >
               Statistics
             </Link>
+            <Link
+              href="/persons"
+              className={cn(
+                "transition-colors hover:text-foreground/80",
+                pathname === "/persons" ? "text-foreground" : "text-foreground/60"
+              )}
+            >
+              Persons
+            </Link>
           </nav>
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -75,6 +84,16 @@ export function Header() {
                   onClick={handleLinkClick}
                 >
                   Statistics
+                </Link>
+                <Link
+                  href="/persons"
+                  className={cn(
+                    "transition-colors hover:text-foreground/80",
+                    pathname === "/persons" ? "text-foreground" : "text-foreground/60"
+                  )}
+                  onClick={handleLinkClick}
+                >
+                  Persons
                 </Link>
               </nav>
             </SheetContent>

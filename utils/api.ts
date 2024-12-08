@@ -14,3 +14,30 @@ export async function fetchFromAPI(endpoint: string, params: Record<string, stri
   return response.json();
 }
 
+export interface Person {
+  id: string;
+  nachname: string;
+  vorname: string;
+  namenszusatz?: string;
+  typ: string;
+  wahlperiode: number;
+  basisdatum: string;
+  datum: string;
+  aktualisiert: string;
+  titel: string;
+  person_roles: PersonRole[];
+}
+
+export interface PersonRole {
+  funktion: string;
+  funktionszusatz?: string;
+  fraktion?: string;
+  nachname: string;
+  vorname: string;
+  namenszusatz?: string;
+  wahlperiode_nummer: number[];
+  wahlkreiszusatz?: string;
+  ressort_titel?: string;
+  bundesland?: string;
+}
+
