@@ -41,3 +41,41 @@ export interface PersonRole {
   bundesland?: string;
 }
 
+export interface Activity {
+  id: string;
+  aktivitaetsart: string;
+  typ: string;
+  dokumentart: 'Drucksache' | 'Plenarprotokoll';
+  wahlperiode: number;
+  datum: string;
+  aktualisiert: string;
+  titel: string;
+  fundstelle: Fundstelle;
+  vorgangsbezug: VorgangspositionBezug[];
+  vorgangsbezug_anzahl: number;
+  deskriptor: Deskriptor[];
+  abstract?: string;
+}
+
+export interface Fundstelle {
+  id: string;
+  dokumentart: 'Drucksache' | 'Plenarprotokoll';
+  pdf_url: string;
+  dokumentnummer: string;
+  datum: string;
+  herausgeber: string;
+  seite?: string;
+}
+
+export interface VorgangspositionBezug {
+  id: string;
+  titel: string;
+  vorgangstyp: string;
+  vorgangsposition: string;
+}
+
+export interface Deskriptor {
+  name: string;
+  typ: string;
+}
+
