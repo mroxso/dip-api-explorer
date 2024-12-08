@@ -1,7 +1,7 @@
 import '@/app/globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Inter } from 'next/font/google'
-import Link from 'next/link'
+import { Header } from '@/components/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,24 +17,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} p-4 md:p-8`}>
+      <body className={inter.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <nav className="mb-8">
-            <ul className="flex space-x-4">
-              <li>
-                <Link href="/" className="text-blue-600 hover:text-blue-800">Home</Link>
-              </li>
-              <li>
-                <Link href="/statistics" className="text-blue-600 hover:text-blue-800">Statistics</Link>
-              </li>
-            </ul>
-          </nav>
-          {children}
+          <div className="relative min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-grow px-4 py-8 md:px-8">
+              {children}
+            </main>
+          </div>
         </ThemeProvider>
       </body>
     </html>
