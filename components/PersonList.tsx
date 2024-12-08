@@ -36,7 +36,8 @@ export function PersonList() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Latest Persons</h2>
         <Button onClick={handleLoadLatest} disabled={loading}>
           {loading ? 'Loading...' : 'Refresh'}
         </Button>

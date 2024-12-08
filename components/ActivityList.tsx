@@ -36,8 +36,8 @@ export function ActivityList() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold mb-4">Latest Activities</h2>
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Latest Activities</h2>
         <Button onClick={handleLoadLatest} disabled={loading}>
           {loading ? 'Loading...' : 'Refresh'}
         </Button>
