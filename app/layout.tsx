@@ -6,7 +6,7 @@ import { Header } from '@/components/Header'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Deutscher Bundestag - DIP API Explorer',
+  title: 'Bundestag Explorer',
   description: 'Explore parliamentary proceedings using the Deutscher Bundestag API',
 }
 

@@ -25,7 +25,7 @@ export function Header() {
       <div className="container flex h-14 max-w-screen-2xl items-center">
         <div className="mr-4 flex flex-1 items-center justify-between md:justify-start">
           <Link href="/" className="flex items-center space-x-2 mr-6">
-            <span className="font-bold">Bundestag API Explorer</span>
+            <span className="font-bold">Bundestag Explorer</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium ml-4">
             <Link
