@@ -2,12 +2,24 @@ import '@/app/globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Inter } from 'next/font/google'
 import { Header } from '@/components/Header'
+import type { Metadata, Viewport } from 'next'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Bundestag Explorer',
   description: 'Explore parliamentary proceedings using the Deutscher Bundestag API',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: 'white' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' }
+  ],
 }
 
 export default function RootLayout({
