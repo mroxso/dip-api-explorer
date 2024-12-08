@@ -54,22 +54,25 @@ export function ProceedingsList() {
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold mb-4">{viewTitle}</h2>
-      <div className="flex space-x-2">
+      <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
         <Input
           type="text"
           placeholder="Search proceedings"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          className="flex-grow"
         />
-        <Button onClick={handleSearch} disabled={loading}>
-          {loading ? 'Loading...' : 'Search'}
-        </Button>
-        <Button onClick={handleLoadLatest} disabled={loading} variant="outline">
-          Load Latest
-        </Button>
+        <div className="flex space-x-2">
+          <Button onClick={handleSearch} disabled={loading} className="flex-grow sm:flex-grow-0">
+            {loading ? 'Loading...' : 'Search'}
+          </Button>
+          <Button onClick={handleLoadLatest} disabled={loading} variant="outline" className="flex-grow sm:flex-grow-0">
+            Load Latest
+          </Button>
+        </div>
       </div>
       {error && <p className="text-red-500">{error}</p>}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {proceedings.map((proceeding) => (
           <Card key={proceeding.id} className="hover:shadow-lg transition-shadow duration-300">
             <CardHeader>
@@ -80,10 +83,12 @@ export function ProceedingsList() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p><strong>Type:</strong> {proceeding.vorgangstyp}</p>
-              <p><strong>Electoral term:</strong> {proceeding.wahlperiode}</p>
-              <p><strong>Date:</strong> {proceeding.datum}</p>
-              <Button asChild className="mt-4">
+              <div className="space-y-2">
+                <p className="text-sm"><strong>Type:</strong> {proceeding.vorgangstyp}</p>
+                <p className="text-sm"><strong>Electoral term:</strong> {proceeding.wahlperiode}</p>
+                <p className="text-sm"><strong>Date:</strong> {proceeding.datum}</p>
+              </div>
+              <Button asChild className="w-full mt-4">
                 <Link href={`/proceeding/${proceeding.id}`}>
                   View Details
                 </Link>
