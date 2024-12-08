@@ -38,15 +38,6 @@ export function Header() {
               Home
             </Link>
             <Link
-              href="/statistics"
-              className={cn(
-                "transition-colors hover:text-foreground/80",
-                pathname === "/statistics" ? "text-foreground" : "text-foreground/60"
-              )}
-            >
-              Statistics
-            </Link>
-            <Link
               href="/persons"
               className={cn(
                 "transition-colors hover:text-foreground/80",
@@ -63,6 +54,15 @@ export function Header() {
               )}
             >
               Activities
+            </Link>
+            <Link
+              href="/statistics"
+              className={cn(
+                "transition-colors hover:text-foreground/80",
+                pathname === "/statistics" ? "text-foreground" : "text-foreground/60"
+              )}
+            >
+              Statistics
             </Link>
           </nav>
           <Sheet open={open} onOpenChange={setOpen}>
@@ -85,16 +85,6 @@ export function Header() {
                   Home
                 </Link>
                 <Link
-                  href="/statistics"
-                  className={cn(
-                    "transition-colors hover:text-foreground/80",
-                    pathname === "/statistics" ? "text-foreground" : "text-foreground/60"
-                  )}
-                  onClick={handleLinkClick}
-                >
-                  Statistics
-                </Link>
-                <Link
                   href="/persons"
                   className={cn(
                     "transition-colors hover:text-foreground/80",
@@ -113,6 +103,16 @@ export function Header() {
                   onClick={handleLinkClick}
                 >
                   Activities
+                </Link>
+                <Link
+                  href="/statistics"
+                  className={cn(
+                    "transition-colors hover:text-foreground/80",
+                    pathname === "/statistics" ? "text-foreground" : "text-foreground/60"
+                  )}
+                  onClick={handleLinkClick}
+                >
+                  Statistics
                 </Link>
               </nav>
             </SheetContent>
