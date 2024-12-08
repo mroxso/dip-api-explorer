@@ -1,4 +1,7 @@
+'use client'
+
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -12,15 +15,12 @@ interface Proceeding {
   datum: string;
 }
 
-interface ProceedingsListProps {
-  onViewChange: (title: string) => void;
-}
-
-export function ProceedingsList({ onViewChange }: ProceedingsListProps) {
+export function ProceedingsList() {
   const [proceedings, setProceedings] = useState<Proceeding[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [viewTitle, setViewTitle] = useState('Latest Proceedings');
 
   const fetchProceedings = async (params: Record<string, string> = {}) => {
     setLoading(true);
@@ -38,21 +38,22 @@ export function ProceedingsList({ onViewChange }: ProceedingsListProps) {
 
   const handleSearch = () => {
     fetchProceedings({ 'f.titel': searchTerm });
-    onViewChange(`Search Results: "${searchTerm}"`);
+    setViewTitle(`Search Results: "${searchTerm}"`);
   };
 
   const handleLoadLatest = () => {
     setSearchTerm('');
     fetchProceedings();
-    onViewChange('Latest Proceedings');
+    setViewTitle('Latest Proceedings');
   };
 
   useEffect(() => {
     handleLoadLatest();
-  }, [onViewChange]);
+  }, []);
 
   return (
     <div className="space-y-4">
+      <h2 className="text-xl font-semibold mb-4">{viewTitle}</h2>
       <div className="flex space-x-2">
         <Input
           type="text"
@@ -70,14 +71,23 @@ export function ProceedingsList({ onViewChange }: ProceedingsListProps) {
       {error && <p className="text-red-500">{error}</p>}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {proceedings.map((proceeding) => (
-          <Card key={proceeding.id}>
+          <Card key={proceeding.id} className="hover:shadow-lg transition-shadow duration-300">
             <CardHeader>
-              <CardTitle className="text-lg">{proceeding.titel}</CardTitle>
+              <CardTitle className="text-lg">
+                <Link href={`/proceeding/${proceeding.id}`} className="hover:underline">
+                  {proceeding.titel}
+                </Link>
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <p><strong>Type:</strong> {proceeding.vorgangstyp}</p>
               <p><strong>Electoral term:</strong> {proceeding.wahlperiode}</p>
               <p><strong>Date:</strong> {proceeding.datum}</p>
+              <Button asChild className="mt-4">
+                <Link href={`/proceeding/${proceeding.id}`}>
+                  View Details
+                </Link>
+              </Button>
             </CardContent>
           </Card>
         ))}
