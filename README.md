@@ -37,7 +37,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 # Changelogs
-
+- Add more data to details page
+```
+npx shadcn@latest add "https://v0.dev/chat/b/b_9SjGzouVj1X?token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..v7q9PvIzK3IWvdwx.pZUitZ58Iq2p_N5O5aZ303pIqkWRJAuOVvygCtz3xR00t4CN3YAxIoQabHA.JWoVeTyiEa98ezyQ3oFwFg"
+```
 - Added AI generated (v0.dev) components (details page) with
 ```
 npx shadcn@latest add "https://v0.dev/chat/b/b_s3nEEqXGEEI?token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..5YXfekw7bWiDHI-Z.1JYaozq7WMzHmeZPlg3bNsf_sUc1_oMVkapFzvT3MLAjuIIyPFP1P9VoOe4.WWAGrLwhcgp6Gqa1jEeU0w"
