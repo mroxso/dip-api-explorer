@@ -11,14 +11,12 @@ export function PersonList() {
   const [persons, setPersons] = useState<Person[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [viewTitle, setViewTitle] = useState('Latest Persons');
 
-  const fetchPersons = async (params: Record<string, string> = {}) => {
+  const fetchPersons = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetchFromAPI('/person', params);
+      const response = await fetchFromAPI('/person');
       setPersons(response.documents);
     } catch (err) {
       setError('Failed to fetch persons. Please try again later.');
@@ -28,15 +26,8 @@ export function PersonList() {
     }
   };
 
-  const handleSearch = () => {
-    fetchPersons({ 'f.nachname': searchTerm });
-    setViewTitle(`Search Results: "${searchTerm}"`);
-  };
-
   const handleLoadLatest = () => {
-    setSearchTerm('');
     fetchPersons();
-    setViewTitle('Latest Persons');
   };
 
   useEffect(() => {
@@ -45,23 +36,10 @@ export function PersonList() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold mb-4">{viewTitle}</h2>
-      <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-        <Input
-          type="text"
-          placeholder="Search persons"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-grow"
-        />
-        <div className="flex space-x-2">
-          <Button onClick={handleSearch} disabled={loading} className="flex-grow sm:flex-grow-0">
-            {loading ? 'Loading...' : 'Search'}
-          </Button>
-          <Button onClick={handleLoadLatest} disabled={loading} variant="outline" className="flex-grow sm:flex-grow-0">
-            Load Latest
-          </Button>
-        </div>
+      <div className="flex justify-end">
+        <Button onClick={handleLoadLatest} disabled={loading}>
+          {loading ? 'Loading...' : 'Refresh'}
+        </Button>
       </div>
       {error && <p className="text-red-500">{error}</p>}
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

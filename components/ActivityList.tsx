@@ -11,14 +11,12 @@ export function ActivityList() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [viewTitle, setViewTitle] = useState('Latest Activities');
 
-  const fetchActivities = async (params: Record<string, string> = {}) => {
+  const fetchActivities = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetchFromAPI('/aktivitaet', params);
+      const response = await fetchFromAPI('/aktivitaet');
       setActivities(response.documents);
     } catch (err) {
       setError('Failed to fetch activities. Please try again later.');
@@ -28,15 +26,8 @@ export function ActivityList() {
     }
   };
 
-  const handleSearch = () => {
-    fetchActivities({ 'f.titel': searchTerm });
-    setViewTitle(`Search Results: "${searchTerm}"`);
-  };
-
   const handleLoadLatest = () => {
-    setSearchTerm('');
     fetchActivities();
-    setViewTitle('Latest Activities');
   };
 
   useEffect(() => {
@@ -45,23 +36,11 @@ export function ActivityList() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold mb-4">{viewTitle}</h2>
-      <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-        <Input
-          type="text"
-          placeholder="Search activities"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-grow"
-        />
-        <div className="flex space-x-2">
-          <Button onClick={handleSearch} disabled={loading} className="flex-grow sm:flex-grow-0">
-            {loading ? 'Loading...' : 'Search'}
-          </Button>
-          <Button onClick={handleLoadLatest} disabled={loading} variant="outline" className="flex-grow sm:flex-grow-0">
-            Load Latest
-          </Button>
-        </div>
+      <h2 className="text-xl font-semibold mb-4">Latest Activities</h2>
+      <div className="flex justify-end">
+        <Button onClick={handleLoadLatest} disabled={loading}>
+          {loading ? 'Loading...' : 'Refresh'}
+        </Button>
       </div>
       {error && <p className="text-red-500">{error}</p>}
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
