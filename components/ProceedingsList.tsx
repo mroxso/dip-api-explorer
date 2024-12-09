@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { fetchFromAPI } from '@/utils/api'
+import NodeCache from 'node-cache'
 
 interface Proceeding {
   id: string;
@@ -14,6 +15,9 @@ interface Proceeding {
   wahlperiode: number;
   datum: string;
 }
+
+// Initialize the cache
+const cache = new NodeCache({ stdTTL: 300 });
 
 export function ProceedingsList() {
   const [proceedings, setProceedings] = useState<Proceeding[]>([]);
@@ -47,6 +51,11 @@ export function ProceedingsList() {
     setViewTitle('Latest Proceedings');
   };
 
+  const handleClearCache = () => {
+    cache.flushAll();
+    handleLoadLatest();
+  };
+
   useEffect(() => {
     handleLoadLatest();
   }, []);
@@ -68,6 +77,9 @@ export function ProceedingsList() {
           </Button>
           <Button onClick={handleLoadLatest} disabled={loading} variant="outline" className="flex-grow sm:flex-grow-0">
             Load Latest
+          </Button>
+          <Button onClick={handleClearCache} disabled={loading} variant="secondary" className="flex-grow sm:flex-grow-0">
+            Clear Cache
           </Button>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { fetchFromAPI } from '@/utils/api'
+import NodeCache from 'node-cache'
 
 interface Proceeding {
   vorgangstyp: string
@@ -17,6 +18,9 @@ interface ChartData {
   name: string
   value: number
 }
+
+// Initialize the cache
+const cache = new NodeCache({ stdTTL: 300 });
 
 export function StatisticsPage() {
   const [proceedings, setProceedings] = useState<Proceeding[]>([])
@@ -40,6 +44,11 @@ export function StatisticsPage() {
       setLoading(false)
     }
   }
+
+  const handleClearCache = () => {
+    cache.flushAll();
+    fetchProceedings();
+  };
 
   const countByProperty = (property: keyof Proceeding) => {
     const counts: Record<string, number> = {}
@@ -70,6 +79,10 @@ export function StatisticsPage() {
 
   return (
     <div className="space-y-8">
+      <div className="flex justify-end">
+        <Button onClick={fetchProceedings} className="mr-2">Refresh Data</Button>
+        <Button onClick={handleClearCache} variant="secondary">Clear Cache</Button>
+      </div>
       <Card>
         <CardHeader>
           <CardTitle>Proceedings by Type</CardTitle>
@@ -123,8 +136,6 @@ export function StatisticsPage() {
           </ResponsiveContainer>
         </CardContent>
       </Card>
-
-      <Button onClick={fetchProceedings}>Refresh Data</Button>
     </div>
   )
 }
