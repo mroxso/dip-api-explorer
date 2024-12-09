@@ -5,6 +5,10 @@ import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { fetchFromAPI, Person } from '@/utils/api'
+import NodeCache from 'node-cache'
+
+// Initialize the cache
+const cache = new NodeCache({ stdTTL: 300 });
 
 export function PersonList() {
   const [persons, setPersons] = useState<Person[]>([]);
@@ -29,6 +33,11 @@ export function PersonList() {
     fetchPersons();
   };
 
+  const handleClearCache = () => {
+    cache.flushAll();
+    handleLoadLatest();
+  };
+
   useEffect(() => {
     handleLoadLatest();
   }, []);
@@ -37,9 +46,14 @@ export function PersonList() {
     <div className="space-y-4">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">Latest Persons</h2>
-        <Button onClick={handleLoadLatest} disabled={loading}>
-          {loading ? 'Loading...' : 'Refresh'}
-        </Button>
+        <div className="space-x-2">
+          <Button onClick={handleLoadLatest} disabled={loading}>
+            {loading ? 'Loading...' : 'Refresh'}
+          </Button>
+          <Button onClick={handleClearCache} disabled={loading} variant="secondary">
+            Clear Cache
+          </Button>
+        </div>
       </div>
       {error && <p className="text-red-500">{error}</p>}
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

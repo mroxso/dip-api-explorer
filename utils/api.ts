@@ -1,9 +1,21 @@
+import NodeCache from 'node-cache';
+
+// Initialize the cache with a default TTL of 5 minutes
+const cache = new NodeCache({ stdTTL: 300 });
+
 export async function fetchFromAPI(endpoint: string, params: Record<string, string> = {}) {
-  const url = new URL('/api/bundestag', window.location.origin);
+  const url = new URL('/api/bundestag', typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
   url.searchParams.append('endpoint', endpoint);
   Object.entries(params).forEach(([key, value]) => {
     url.searchParams.append(key, value);
   });
+
+  const cacheKey = url.toString();
+  const cachedData = cache.get(cacheKey);
+
+  if (cachedData) {
+    return cachedData;
+  }
 
   const response = await fetch(url.toString());
 
@@ -11,7 +23,10 @@ export async function fetchFromAPI(endpoint: string, params: Record<string, stri
     throw new Error(`API request failed: ${response.statusText}`);
   }
 
-  return response.json();
+  const data = await response.json();
+  cache.set(cacheKey, data);
+
+  return data;
 }
 
 export interface Person {
